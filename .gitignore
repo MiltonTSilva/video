@@ -1,0 +1,40 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretório de dependências do Node
+node_modules/
+
+# Diretório de dependências do pacote
+jspm_packages/
+
+# Diretório de saída do TypeScript
+dist/
+
+# Diretório de saída do build
+build/
+
+# Arquivos de configuração do ambiente
+.env
+
+# Diretórios temporários
+tmp/
+temp/
+
+# Arquivos de cache
+.cache/
+.parcel-cache/
+
+# Arquivos de cobertura de testes
+coverage/
+
+# Arquivos de IDEs
+.vscode/
+.idea/
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
