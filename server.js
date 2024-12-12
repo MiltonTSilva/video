@@ -1,17 +1,18 @@
 const express = require("express");
-const http = require("https");
+const https = require("https");
 const socketIo = require("socket.io");
+const fs = require("fs");
 const path = require("path");
 
 const app = express();
 
 // Leia os arquivos de certificado e chave
 const options = {
-  key: fs.readFileSync("path/to/localhost-key.pem"), // Chave privada
-  cert: fs.readFileSync("path/to/localhost.pem"),   // Certificado
+  key: fs.readFileSync(path.join(__dirname, "videokey.pem")), // Chave privada
+  cert: fs.readFileSync(path.join(__dirname, "videocert.pem")), // Certificado
 };
 
-const server = http.createServer(options, app);
+const server = https.createServer(options, app);
 const io = socketIo(server);
 
 // Rota para servir o arquivo HTML
