@@ -15,8 +15,12 @@
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
   </head>
   <body>
+    <h4>Versão 1.0.0</h4>
+
     <video id="localVideo" autoplay></video>
     <video id="remoteVideo" autoplay></video>
+
+    <button id="pauseButton">Pausar Vídeo</button>
 
     <!-- <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> -->
 
@@ -69,6 +73,19 @@
       peerConnection.createOffer().then((offer) => {
         peerConnection.setLocalDescription(offer);
         socket.emit("offer", offer);
+      });
+
+      // Adiciona funcionalidade ao botão de pausar
+      pauseButton.addEventListener("click", () => {
+        if (localVideo.paused) {
+          localVideo.play();
+          remoteVideo.play();
+          pauseButton.textContent = "Pausar Vídeo";
+        } else {
+          localVideo.pause();
+          remoteVideo.pause();
+          pauseButton.textContent = "Reproduzir Vídeo";
+        }
       });
     </script>
   </body>
