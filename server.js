@@ -1,18 +1,19 @@
 const express = require("express");
-const https = require("https");
+const http = require("https");
 const socketIo = require("socket.io");
-const fs = require("fs");
+//const fs = require("fs");
 const path = require("path");
 
 const app = express();
 
 // Leia os arquivos de certificado e chave
-const options = {
+/* const options = {
   key: fs.readFileSync(path.join(__dirname, "videokey.pem")), // Chave privada
   cert: fs.readFileSync(path.join(__dirname, "videocert.pem")), // Certificado
-};
+}; */
 
-const server = https.createServer(options, app);
+// const server = https.createServer(options, app);
+const server = http.createServer(app);
 const io = socketIo(server);
 
 // Rota para servir o arquivo HTML
@@ -21,16 +22,31 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+  console.log("New client connected");
+
   socket.on("offer", (offer) => {
+    console.log("Received offer:", offer);
     socket.broadcast.emit("offer", offer);
   });
 
   socket.on("answer", (answer) => {
+    console.log("Received answer:", answer);
     socket.broadcast.emit("answer", answer);
   });
 
   socket.on("candidate", (candidate) => {
+    console.log("Received ICE candidate:", candidate);
     socket.broadcast.emit("candidate", candidate);
+  });
+
+  // Evento para troca de mensagens de texto
+  socket.on("message", (message) => {
+    console.log("Received message:", message);
+    socket.broadcast.emit("message", message);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
   });
 });
 
